@@ -99,4 +99,29 @@ public class Project {
                 ", projectTimeStamp=" + projectTimeStamp +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (projectName != null ? !projectName.equals(project.projectName) : project.projectName != null) return false;
+        if (projectCompanyId != null ? !projectCompanyId.equals(project.projectCompanyId) : project.projectCompanyId != null)
+            return false;
+        if (projectCustomerId != null ? !projectCustomerId.equals(project.projectCustomerId) : project.projectCustomerId != null)
+            return false;
+        return projectTimeStamp != null ? projectTimeStamp.equals(project.projectTimeStamp) : project.projectTimeStamp == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = projectName != null ? projectName.hashCode() : 0;
+        result = 31 * result + (projectCompanyId != null ? projectCompanyId.hashCode() : 0);
+        result = 31 * result + (projectCustomerId != null ? projectCustomerId.hashCode() : 0);
+        result = 31 * result + (projectTimeStamp != null ? projectTimeStamp.hashCode() : 0);
+        return result;
+    }
 }

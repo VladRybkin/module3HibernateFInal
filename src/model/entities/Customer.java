@@ -42,5 +42,21 @@ public class Customer {
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        return customerName != null ? customerName.equals(customer.customerName) : customer.customerName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return customerName != null ? customerName.hashCode() : 0;
+    }
 }
 

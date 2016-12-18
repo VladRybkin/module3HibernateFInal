@@ -100,5 +100,29 @@ public class Developer {
         this.developerJoinDate = developerJoinDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Developer developer = (Developer) o;
+
+        if (developerName != null ? !developerName.equals(developer.developerName) : developer.developerName != null)
+            return false;
+        if (developerCompanyId != null ? !developerCompanyId.equals(developer.developerCompanyId) : developer.developerCompanyId != null)
+            return false;
+        if (developerProjectId != null ? !developerProjectId.equals(developer.developerProjectId) : developer.developerProjectId != null)
+            return false;
+        return developerJoinDate != null ? developerJoinDate.equals(developer.developerJoinDate) : developer.developerJoinDate == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = developerName != null ? developerName.hashCode() : 0;
+        result = 31 * result + (developerCompanyId != null ? developerCompanyId.hashCode() : 0);
+        result = 31 * result + (developerProjectId != null ? developerProjectId.hashCode() : 0);
+        result = 31 * result + (developerJoinDate != null ? developerJoinDate.hashCode() : 0);
+        return result;
+    }
 }

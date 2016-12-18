@@ -50,4 +50,20 @@ public class Skill {
                 ", skillName='" + skillName + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Skill skill = (Skill) o;
+
+        return skillName != null ? skillName.equals(skill.skillName) : skill.skillName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return skillName != null ? skillName.hashCode() : 0;
+    }
 }
