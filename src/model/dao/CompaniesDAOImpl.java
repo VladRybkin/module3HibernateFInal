@@ -16,63 +16,45 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Company company) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public Company get(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public void update(Company company) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public void delete(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public Company findByName(String name) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public List<Company> getAll() {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }

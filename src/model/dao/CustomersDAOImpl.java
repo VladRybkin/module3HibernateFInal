@@ -15,63 +15,45 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Customer customer) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public Customer get(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public void update(Customer customer) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public void delete(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public String findByName(String name) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public List<Customer> getAll() {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }

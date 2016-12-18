@@ -16,54 +16,38 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Skill skill) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        transaction = session.beginTransaction();
-        Skill skill1=new Skill(skill.getSkillId(), skill.getSkillName());
-        session.save(skill);
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public String findByName(String name) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public Skill get(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public void update(Skill skill) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public void delete(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
@@ -72,7 +56,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
         Session session=sessionFactory.openSession();
         Transaction transaction=null;
         transaction=session.beginTransaction();
-
+        session.createQuery("");
         transaction.commit();
         session.close();
         return null;

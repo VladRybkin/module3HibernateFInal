@@ -20,66 +20,46 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Developer developer) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
 
     }
 
     @Override
     public Developer get(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public void update(Developer developer) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-        developer.setDeveloperId(developer.getDeveloperId());
-        developer.setDeveloperName(developer.getDeveloperName());
-        session.update(developer);
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public void delete(int id) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
     }
 
     @Override
     public String findByName(String name) {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
 
     @Override
     public List<Developer> getAll() {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-
-        transaction.commit();
+        Session session =sessionFactory.getCurrentSession();
+        session.createQuery("").list();
         session.close();
         return null;
     }
