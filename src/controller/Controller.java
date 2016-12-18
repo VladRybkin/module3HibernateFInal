@@ -120,27 +120,28 @@ public class Controller {
 
 
     public Developer findByNameDeveloperDB() throws IOException {
-        Developer developer=new Developer(developersDAOimpl.findByName(ConsoleDataInput.readString()));
+        Developer developer=developersDAOimpl.findByName(ConsoleDataInput.readString());
         return developer;
     }
+
     public Customer findByNameCustomerDB() throws IOException{
-        Customer customer=new Customer(customersDAOimpl.findByName(ConsoleDataInput.readString()));
+        Customer customer=customersDAOimpl.findByName(ConsoleDataInput.readString());
         return customer;
     }
 
     public Project findByNameprojectDB() throws IOException{
-        Project project=new Project(projectDAOimpl.findByName(ConsoleDataInput.readString()));
+        Project project=projectDAOimpl.findByName(ConsoleDataInput.readString());
         return project;
     }
 
 
-//    public Company findbyCompanyDB() throws IOException{
-//        Company company=new Company(companiesDAOimpl.findByName(ConsoleDataInput.readString()));
-//        return company;
-//    }
+    public Company findbyCompanyDB() throws IOException{
+        Company company=companiesDAOimpl.findByName(ConsoleDataInput.readString());
+        return company;
+    }
 
     public Skill findByNameSkillDB() throws IOException {
-        Skill skill = new Skill(skillDAOImpl.findByName(ConsoleDataInput.readString()));
+        Skill skill = skillDAOImpl.findByName(ConsoleDataInput.readString());
         return skill;
     }
 
