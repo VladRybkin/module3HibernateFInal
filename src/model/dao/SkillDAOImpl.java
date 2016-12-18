@@ -1,10 +1,12 @@
 package model.dao;
 
+import model.entities.Developer;
 import model.entities.Skill;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import utilities.ConnectionUtils;
 
 import java.sql.ResultSet;
@@ -17,48 +19,43 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     @Override
     public void create(Skill skill) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("insert into Skill (skillName) VALUES (?)");
         session.close();
     }
 
     @Override
-    public String findByName(String name) {
+    public Skill findByName(String name) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Skill where e.skillName like : name");
+        query.setParameter("name", name);
+        return (Skill) query.uniqueResult();
     }
 
     @Override
     public Skill get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Skill where e.skillId like :id");
+        query.setParameter("id", id);
+        return (Skill) query.uniqueResult();
     }
 
     @Override
     public void update(Skill skill) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("update Skill e set skillName like : e");
         session.close();
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("delete from Skill e where skillId like: e");
         session.close();
     }
 
     @Override
     public List<Skill> getAll() {
-        Session session=sessionFactory.openSession();
-        Transaction transaction=null;
-        transaction=session.beginTransaction();
-        session.createQuery("");
-        transaction.commit();
-        session.close();
-        return null;
+        Session session =sessionFactory.getCurrentSession();
+        return session.createQuery("select e from Skill e").list();
     }
 }

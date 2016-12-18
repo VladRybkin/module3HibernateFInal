@@ -1,11 +1,10 @@
 package model.dao;
 
-import model.entities.Company;
-import model.entities.Customer;
-import model.entities.Project;
+import model.entities.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utilities.ConnectionUtils;
 
 import java.sql.Date;
@@ -23,7 +22,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     @Override
     public void create(Project project) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("insert into Project(projectName) VALUES (?)");
         session.close();
 
     }
@@ -31,30 +30,30 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     @Override
     public Project get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Project where e.developerId like :id");
+        query.setParameter("id", id);
+        return (Project) query.uniqueResult();
     }
 
     @Override
     public void update(Project project) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("update Project e set projectName like : e");
         session.close();
     }
 
     @Override
-    public String findByName(String name) {
+    public Project findByName(String name) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Project where e.projectName like : name");
+        query.setParameter("name", name);
+        return (Project) query.uniqueResult();
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("delete from Project e where projectId like: e");
         session.close();
 
     }
@@ -62,8 +61,6 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     @Override
     public List<Project> getAll() {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        return session.createQuery("select e from Project e").list();
     }
 }

@@ -1,18 +1,11 @@
 package model.dao;
 
 
-import model.entities.Company;
 import model.entities.Developer;
-import model.entities.Project;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import utilities.ConnectionUtils;
+import org.hibernate.query.Query;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +14,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     @Override
     public void create(Developer developer) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("insert into Developer(developerName) VALUES (?)");
         session.close();
 
     }
@@ -29,39 +22,41 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     @Override
     public Developer get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Developer where e.developerId like :id");
+        query.setParameter("id", id);
+        return (Developer) query.uniqueResult();
     }
 
     @Override
     public void update(Developer developer) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("update Developer e set developerName like : e");
         session.close();
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
+        session.createQuery("delete from Developer e where developerId like: e");
         session.close();
     }
 
     @Override
-    public String findByName(String name) {
+    public Developer findByName(String name) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        Query query = session.createQuery("select e from Developer where e.developerName like : name");
+        query.setParameter("name", name);
+        return (Developer) query.uniqueResult();
     }
 
     @Override
     public List<Developer> getAll() {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("").list();
-        session.close();
-        return null;
+        return session.createQuery("select e from Developer e").list();
+    }
+
+    public static void setSessionFactory(SessionFactory sessionFactory) {
+        DevelopersDAOImpl.sessionFactory = sessionFactory;
     }
 }
 
