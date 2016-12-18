@@ -45,7 +45,9 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
         Session session=sessionFactory.openSession();
         Transaction transaction=null;
         transaction=session.beginTransaction();
-
+        developer.setDeveloperId(developer.getDeveloperId());
+        developer.setDeveloperName(developer.getDeveloperName());
+        session.update(developer);
         transaction.commit();
         session.close();
     }

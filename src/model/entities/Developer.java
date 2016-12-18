@@ -1,20 +1,27 @@
 package model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
 @Entity
 @Table(name = "developers")
 public class Developer {
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "developerID")
     private int developerId;
     @Column(name = "developerName")
     private String developerName;
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "developerCompanyID")
     private Company developerCompanyId;
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "developerProjectID")
     private Project developerProjectId;
     @Column(name = "developerJoinDate")

@@ -148,29 +148,29 @@ public class Controller {
 
 
     public List<Company> getAllcompanyFromDb() throws IOException {
-        List<Company> companies = new ArrayList<>();
+        List<Company> companies = new ArrayList<Company>();
         return companies = companiesDAOimpl.getAll();
     }
 
 
     public List<Customer> getAllCustomerFromDb() throws IOException {
-    List<Customer> customers = new ArrayList<>();
+    List<Customer> customers = new ArrayList<Customer>();
     return customers = customersDAOimpl.getAll();
     }
 
     public List<Developer> getAllDeveloperFromDb() throws IOException {
-        List<Developer> developers = new ArrayList<>();
+        List<Developer> developers = new ArrayList<Developer>();
         return developers = developersDAOimpl.getAll();
     }
 
     public List<Project> getAllprojcetFromDb() throws IOException {
-        List<Project> projects = new ArrayList<>();
+        List<Project> projects = new ArrayList<Project>();
         return projects = projectDAOimpl.getAll();
     }
 
 
     public List<Skill> getAllSkillsFromDb() throws IOException {
-        List<Skill> skills = new ArrayList<>();
+        List<Skill> skills = new ArrayList<Skill>();
         return skills = skillDAOImpl.getAll();
     }
 

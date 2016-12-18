@@ -1,9 +1,8 @@
 package model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * Created by Vlad on 04.12.2016.
@@ -12,6 +11,8 @@ import javax.persistence.Table;
 @Table (name = "Companies")
 public class Company {
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "companyID")
     private int companyID;
     @Column(name = "companyName")
