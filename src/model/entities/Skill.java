@@ -10,9 +10,9 @@ public class Skill {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "skillID")
+    @Column(name = "skill_ID")
     private int skillId;
-    @Column(name = "skillName")
+    @Column(name = "skill_Name")
     private String skillName;
 
     public Skill(String skillName) {

@@ -19,7 +19,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     public void create(Customer customer) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Customer(customerName) VALUES (?)");
-        session.close();
+
     }
 
     @Override
@@ -34,14 +34,14 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     public void update(Customer customer) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update skills set skill_name = ?").list();
-        session.close();
+
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Customer e set customerName like : e");
-        session.close();
+        session.createQuery("update Customer e set customerName like : e").executeUpdate();
+
     }
 
     @Override
@@ -50,6 +50,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
         Query query = session.createQuery("select e from Customer where e.customerName like : name");
         query.setParameter("name", name);
         return (Customer) query.uniqueResult();
+
     }
 
     @Override

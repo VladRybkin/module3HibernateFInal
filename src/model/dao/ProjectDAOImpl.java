@@ -23,7 +23,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     public void create(Project project) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Project(projectName) VALUES (?)");
-        session.close();
+
 
     }
 
@@ -39,7 +39,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     public void update(Project project) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update Project e set projectName like : e");
-        session.close();
+
     }
 
     @Override
@@ -53,8 +53,8 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Project e where projectId like: e");
-        session.close();
+        session.createQuery("delete from Project e where projectId like: e").executeUpdate();
+
 
     }
 

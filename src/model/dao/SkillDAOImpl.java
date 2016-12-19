@@ -20,7 +20,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     public void create(Skill skill) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Skill (skillName) VALUES (?)");
-        session.close();
+
     }
 
     @Override
@@ -43,14 +43,14 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     public void update(Skill skill) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update Skill e set skillName like : e");
-        session.close();
+
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Skill e where skillId like: e");
-        session.close();
+        session.createQuery("delete from Skill e where skillId like: e").executeUpdate();
+
     }
 
     @Override

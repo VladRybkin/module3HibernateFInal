@@ -20,7 +20,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     public void create(Company company) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Company(companyName) VALUES (?)");
-        session.close();
+
     }
 
     @Override
@@ -35,14 +35,14 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     public void update(Company company) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update Company e set companyName like : e");
-        session.close();
+
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Company e where companyId like: e");
-        session.close();
+        session.createQuery("delete from Company e where companyId like: e").executeUpdate();
+
     }
 
     @Override

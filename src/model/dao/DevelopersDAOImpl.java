@@ -15,7 +15,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     public void create(Developer developer) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Developer(developerName) VALUES (?)");
-        session.close();
+
 
     }
 
@@ -31,14 +31,14 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     public void update(Developer developer) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update Developer e set developerName like : e");
-        session.close();
+
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Developer e where developerId like: e");
-        session.close();
+        session.createQuery("delete from Developer e where developerId like: e").executeUpdate();
+
     }
 
     @Override

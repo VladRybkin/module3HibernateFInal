@@ -10,21 +10,26 @@ public class Developer {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "developerID")
+    @Column(name = "developer_ID")
     private int developerId;
-    @Column(name = "developerName")
+
+    @Column(name = "developer_Name")
     private String developerName;
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "developerCompanyID")
     private Company developerCompanyId;
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "developerProjectID")
+    @OneToMany()
+    @JoinColumn(name = "project_ID")
+    @Column(name = "developerProject_ID")
     private Project developerProjectId;
-    @Column(name = "developerJoinDate")
+
+    @Column(name = "developer_Join_Date")
     private Date developerJoinDate;
 
     public Developer(String developerName, Company developerCompanyId, Project developerProjectId, Date developerJoinDate) {

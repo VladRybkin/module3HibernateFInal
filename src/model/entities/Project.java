@@ -10,21 +10,25 @@ public class Project {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "projectID")
+    @Column(name = "project_ID")
     private int projectId;
-    @Column(name = "developerName")
+
+    @Column(name = "developer_Name")
     private String projectName;
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "projectCompanyID")
     private Company projectCompanyId;
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "projectCustomerID")
+    @Column(name = "project_Customer_ID")
     private Customer projectCustomerId;
-    @Column(name = "projectTimeStamp")
+
+    @Column(name = "project_Time_Stamp")
     private Date projectTimeStamp;
 
     public Project(String projectName, Company projectCompanyId, Customer projectCustomerId, Date projectTimeStamp) {

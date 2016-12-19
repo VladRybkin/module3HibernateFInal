@@ -10,9 +10,10 @@ public class Customer {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "customerID")
+    @Column(name = "customer_ID")
     private int customerId;
-    @Column (name = "costomerName")
+
+    @Column (name = "customer_Name")
     private String customerName;
 
     public Customer(String customerName) {
