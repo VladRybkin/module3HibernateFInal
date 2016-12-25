@@ -15,6 +15,7 @@ public class Skill {
     @Column(name = "skill_Name")
     private String skillName;
 
+
     public Skill(String skillName) {
         this.skillName = skillName;
     }

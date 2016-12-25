@@ -2,6 +2,7 @@ package model.dao;
 
 import model.entities.Company;
 import model.entities.Developer;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,6 +22,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("insert into Company(companyName) VALUES (?)");
 
+
     }
 
     @Override
@@ -29,6 +31,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
         Query query = session.createQuery("select e from Company where e.companyId like :id");
         query.setParameter("id", id);
         return (Company) query.uniqueResult();
+
     }
 
     @Override
@@ -36,12 +39,14 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("update Company e set companyName like : e");
 
+
     }
 
     @Override
     public void delete(int id) {
         Session session =sessionFactory.getCurrentSession();
         session.createQuery("delete from Company e where companyId like: e").executeUpdate();
+
 
     }
 

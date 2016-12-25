@@ -18,7 +18,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     @Override
     public void create(Customer customer) {
         Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into Customer(customerName) VALUES (?)");
+        session.createQuery("insert into e Customer(e.customerName) VALUES (?)");
 
     }
 
@@ -50,7 +50,6 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
         Query query = session.createQuery("select e from Customer where e.customerName like : name");
         query.setParameter("name", name);
         return (Customer) query.uniqueResult();
-
     }
 
     @Override
