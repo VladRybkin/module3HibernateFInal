@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import utilities.ConnectionUtils;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,44 +19,115 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Skill skill) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into Skill (skillName) VALUES (?)");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(skill);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Skill findByName(String name) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Skill where e.skillName like : name");
-        query.setParameter("name", name);
-        return (Skill) query.uniqueResult();
+        Session session = sessionFactory.openSession();
+        Query query = null;
+        try {
+            query = session.createQuery("from Skills where skill_name = :name");
+            query.setParameter("name", name).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+            return (Skill) query.uniqueResult();
+        }
     }
 
     @Override
     public Skill get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Skill where e.skillId like :id");
-        query.setParameter("id", id);
-        return (Skill) query.uniqueResult();
+        Skill skill= null;
+        try {
+            session.beginTransaction();
+            skill=(Skill) session.load(Skill.class, id);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return skill;
     }
 
     @Override
     public void update(Skill skill) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Skill e set skillName like : e");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(skill);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public void delete(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Skill e where skillId like: e").executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        Skill skill = null;
+        try {
+            session.beginTransaction();
+            skill= (Skill) session.load(Skill.class, id);
+            session.delete(skill);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public List<Skill> getAll() {
-        Session session =sessionFactory.getCurrentSession();
-        return session.createQuery("select e from Skill e").list();
+        Session session = sessionFactory.openSession();
+        List<Skill> skills = new ArrayList<Skill>();
+        try {
+            session.beginTransaction();
+            skills = session.createCriteria(Skill.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return skills;
     }
 }

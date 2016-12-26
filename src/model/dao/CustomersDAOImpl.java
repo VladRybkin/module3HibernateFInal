@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utilities.ConnectionUtils;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,50 +16,119 @@ import java.util.List;
 
 public class CustomersDAOImpl implements CustomersDAO<Customer> {
     private static SessionFactory sessionFactory;
+
     @Override
     public void create(Customer customer) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into e Customer(e.customerName) VALUES (?)");
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(customer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
     }
 
     @Override
     public Customer get(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Customer where e.customerId like :id");
-        query.setParameter("id", id);
-        return (Customer) query.uniqueResult();
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = null;
+        try {
+            session.beginTransaction();
+            customer = (Customer) session.load(Customer.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'customerget", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return customer;
     }
 
     @Override
     public void update(Customer customer) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update skills set skill_name = ?").list();
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(customer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public void delete(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Customer e set customerName like : e").executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = null;
+        try {
+            session.beginTransaction();
+            customer = (Customer) session.load(Customer.class, id);
+            session.delete(customer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Customer findByName(String name) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Customer where e.customerName like : name");
-        query.setParameter("name", name);
-        return (Customer) query.uniqueResult();
+        Session session = sessionFactory.openSession();
+        Query query = null;
+        try {
+            query = session.createQuery("from Customers where Customers_name = :name");
+            query.setParameter("name", name).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+            return (Customer) query.uniqueResult();
+        }
     }
 
     @Override
     public List<Customer> getAll() {
-        Session session =sessionFactory.getCurrentSession();
-        return session.createQuery("select e from Customer e").list();
+        Session session = sessionFactory.openSession();
+        List<Customer> customers = new ArrayList<Customer>();
+        try {
+            session.beginTransaction();
+            customers = session.createCriteria(Customer.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return customers;
     }
 
-    public static void setSessionFactory(SessionFactory sessionFactory) {
-        CustomersDAOImpl.sessionFactory = sessionFactory;
-    }
+
 }

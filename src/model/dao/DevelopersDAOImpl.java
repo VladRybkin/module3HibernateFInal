@@ -1,11 +1,14 @@
 package model.dao;
 
 
+import model.entities.Customer;
 import model.entities.Developer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,51 +16,120 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     private static SessionFactory sessionFactory;
     @Override
     public void create(Developer developer) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into Developer(developerName) VALUES (?)");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(developer);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Developer Create fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Developer get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Developer where e.developerId like :id");
-        query.setParameter("id", id);
-        return (Developer) query.uniqueResult();
+        Developer developer= null;
+        try {
+            session.beginTransaction();
+            developer=(Developer) session.load(Developer.class, id);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return developer;
     }
 
     @Override
     public void update(Developer developer) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Developer e set developerName like : e");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(developer);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public void delete(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Developer e where developerId like: e").executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        Developer developer = null;
+        try {
+            session.beginTransaction();
+            developer = (Developer) session.load(Developer.class, id);
+            session.delete(developer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Developer findByName(String name) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Developer where e.developerName like : name");
-        query.setParameter("name", name);
-        return (Developer) query.uniqueResult();
+        Session session = sessionFactory.openSession();
+        Query query = null;
+        try {
+            query = session.createQuery("from Developers where Developer_name = :name");
+            query.setParameter("name", name).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+            return (Developer) query.uniqueResult();
+        }
     }
 
     @Override
     public List<Developer> getAll() {
-        Session session =sessionFactory.getCurrentSession();
-        return session.createQuery("select e from Developer e").list();
+        Session session = sessionFactory.openSession();
+        List<Developer> developers = new ArrayList<Developer>();
+        try {
+            session.beginTransaction();
+            developers = session.createCriteria(Developer.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return developers;
+
     }
 
-    public static void setSessionFactory(SessionFactory sessionFactory) {
-        DevelopersDAOImpl.sessionFactory = sessionFactory;
-    }
+
 }
 
 

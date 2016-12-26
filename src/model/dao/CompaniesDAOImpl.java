@@ -8,8 +8,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,54 +19,121 @@ import java.util.List;
  */
 public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     private static SessionFactory sessionFactory;
+
     @Override
     public void create(Company company) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into Company(companyName) VALUES (?)");
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(company);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Company create fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Company get(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Company where e.companyId like :id");
-        query.setParameter("id", id);
-        return (Company) query.uniqueResult();
+        Session session = sessionFactory.getCurrentSession();
+        Company company = null;
+        try {
+            session.beginTransaction();
+            company = (Company) session.load(Company.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return company;
 
     }
 
     @Override
     public void update(Company company) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Company e set companyName like : e");
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(company);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "companyupdate fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public void delete(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Company e where companyId like: e").executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        Company company = null;
+        try {
+            session.beginTransaction();
+            company = (Company) session.load(Company.class, id);
+            session.delete(company);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Company findByName(String name) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Developer where e.developerName like : name");
-        query.setParameter("name", name);
-        return (Company) query.uniqueResult();
+        Session session = sessionFactory.openSession();
+        Query query = null;
+        try {
+            query = session.createQuery("from Companies where name = :name");
+            query.setParameter("name", name).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+            return (Company) query.uniqueResult();
+        }
     }
 
     @Override
     public List<Company> getAll() {
-        Session session =sessionFactory.getCurrentSession();
-        return session.createQuery("select e from Company e").list();
+        Session session = sessionFactory.openSession();
+        List<Company> companies = new ArrayList<Company>();
+        try {
+            session.beginTransaction();
+            companies = session.createCriteria(Company.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return companies;
     }
 
-    public static void setSessionFactory(SessionFactory sessionFactory) {
-        CompaniesDAOImpl.sessionFactory = sessionFactory;
-    }
+
 }

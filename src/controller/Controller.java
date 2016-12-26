@@ -18,6 +18,7 @@ public class Controller {
     DevelopersDAOImpl developersDAOimpl;
     ProjectDAOImpl projectDAOimpl;
 
+
     @Transactional
     public void createSkillDB() throws IOException {
         Skill skill = new Skill(ConsoleDataInput.readString());

@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utilities.ConnectionUtils;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,19 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
 
     @Override
     public void create(Project project) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("insert into Project(projectName) VALUES (?)");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(project);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
 
     }
@@ -30,37 +42,97 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     @Override
     public Project get(int id) {
         Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Project where e.developerId like :id");
-        query.setParameter("id", id);
-        return (Project) query.uniqueResult();
+        Project project= null;
+        try {
+            session.beginTransaction();
+            project=(Project) session.load(Project.class, id);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return project;
     }
 
     @Override
     public void update(Project project) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("update Project e set projectName like : e");
+        Session session =sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(project);
+            session.getTransaction().commit();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
     }
 
     @Override
     public Project findByName(String name) {
-        Session session =sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select e from Project where e.projectName like : name");
-        query.setParameter("name", name);
-        return (Project) query.uniqueResult();
+        Session session = sessionFactory.openSession();
+        Query query = null;
+        try {
+            query = session.createQuery("from Project where Project_name = :name");
+            query.setParameter("name", name).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+            return (Project) query.uniqueResult();
+        }
     }
 
     @Override
     public void delete(int id) {
-        Session session =sessionFactory.getCurrentSession();
-        session.createQuery("delete from Project e where projectId like: e").executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        Project project = null;
+        try {
+            session.beginTransaction();
+            project = (Project) session.load(Project.class, id);
+            session.delete(project);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
 
 
     }
 
     @Override
     public List<Project> getAll() {
-        Session session =sessionFactory.getCurrentSession();
-        return session.createQuery("select e from Project e").list();
+        Session session = sessionFactory.openSession();
+        List<Project> projects = new ArrayList<Project>();
+        try {
+            session.beginTransaction();
+            projects = session.createCriteria(Project.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+
+                session.close();
+            }
+        }
+
+        return projects;
     }
 }
