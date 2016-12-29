@@ -31,6 +31,7 @@ public class Company {
     public Company() {
     }
 
+
     public int getCompanyID() {
         return companyID;
     }

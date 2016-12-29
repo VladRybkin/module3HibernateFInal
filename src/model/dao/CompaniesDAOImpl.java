@@ -20,6 +20,9 @@ import java.util.List;
 public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     private static SessionFactory sessionFactory;
 
+    public CompaniesDAOImpl(SessionFactory sessionFactory) {
+    }
+
     @Override
     public void create(Company company) {
         Session session = sessionFactory.openSession();
@@ -28,14 +31,13 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             session.save(company);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Company create fail", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
 
                 session.close();
             }
         }
-
     }
 
     @Override

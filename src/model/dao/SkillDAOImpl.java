@@ -17,6 +17,10 @@ import java.util.List;
 
 public class SkillDAOImpl implements SkillDAO<Skill> {
     private static SessionFactory sessionFactory;
+
+    public SkillDAOImpl(SessionFactory sessionFactory) {
+    }
+
     @Override
     public void create(Skill skill) {
         Session session =sessionFactory.openSession();

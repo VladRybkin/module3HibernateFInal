@@ -14,6 +14,10 @@ import java.util.List;
 
 public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     private static SessionFactory sessionFactory;
+
+    public DevelopersDAOImpl(SessionFactory sessionFactory) {
+    }
+
     @Override
     public void create(Developer developer) {
         Session session =sessionFactory.openSession();

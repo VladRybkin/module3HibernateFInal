@@ -17,21 +17,12 @@ import java.util.List;
 public class CustomersDAOImpl implements CustomersDAO<Customer> {
     private static SessionFactory sessionFactory;
 
+    public CustomersDAOImpl(SessionFactory sessionFactory) {
+    }
+
     @Override
     public void create(Customer customer) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.save(customer);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
 
-                session.close();
-            }
-        }
     }
 
     @Override

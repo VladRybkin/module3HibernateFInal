@@ -20,6 +20,9 @@ import java.util.List;
 public class ProjectDAOImpl implements ProjectDAO<Project> {
     private static SessionFactory sessionFactory;
 
+    public ProjectDAOImpl(SessionFactory sessionFactory) {
+    }
+
     @Override
     public void create(Project project) {
         Session session =sessionFactory.openSession();
