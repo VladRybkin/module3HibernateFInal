@@ -22,12 +22,24 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
 
     @Override
     public void create(Customer customer) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.save(customer);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
 
+                session.close();
+            }
+        }
     }
 
     @Override
     public Customer get(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Customer customer = null;
         try {
             session.beginTransaction();
@@ -65,7 +77,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();;
         Customer customer = null;
         try {
             session.beginTransaction();

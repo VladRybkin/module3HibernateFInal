@@ -44,7 +44,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
 
     @Override
     public Project get(int id) {
-        Session session =sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Project project= null;
         try {
             session.beginTransaction();
@@ -100,7 +100,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Project project = null;
         try {
             session.beginTransaction();

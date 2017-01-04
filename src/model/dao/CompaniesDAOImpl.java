@@ -31,7 +31,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             session.save(company);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Create company Fail", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -42,7 +42,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
 
     @Override
     public Company get(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Company company = null;
         try {
             session.beginTransaction();
@@ -81,7 +81,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Company company = null;
         try {
             session.beginTransaction();

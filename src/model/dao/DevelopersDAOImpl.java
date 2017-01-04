@@ -38,7 +38,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
 
     @Override
     public Developer get(int id) {
-        Session session =sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Developer developer= null;
         try {
             session.beginTransaction();
@@ -76,7 +76,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Developer developer = null;
         try {
             session.beginTransaction();

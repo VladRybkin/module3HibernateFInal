@@ -59,7 +59,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
 
     @Override
     public Skill get(int id) {
-        Session session =sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Skill skill= null;
         try {
             session.beginTransaction();
@@ -97,7 +97,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Skill skill = null;
         try {
             session.beginTransaction();
