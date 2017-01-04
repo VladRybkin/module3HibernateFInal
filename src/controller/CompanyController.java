@@ -22,7 +22,7 @@ public class CompanyController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Company.class).configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().addAnnotatedClass(Company.class).configure("HibernateConfig.cfg.xml");
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
 
             CompaniesDAOImpl companyDAO = new CompaniesDAOImpl(sessionFactory);

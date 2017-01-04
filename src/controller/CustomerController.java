@@ -21,7 +21,7 @@ public class CustomerController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Customer.class).configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().addAnnotatedClass(Customer.class).configure("HibernateConfig.cfg.xml");
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             CustomersDAOImpl customersDAO=new CustomersDAOImpl(sessionFactory);
             ConsoleDataInput.writeMessage("\"* * * CUSTOMER * * *\" + \"\\n\" +\n" +
