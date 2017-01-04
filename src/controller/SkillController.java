@@ -15,6 +15,7 @@ import java.sql.SQLException;
  * Created by Vlad on 29.12.2016.
  */
 public class SkillController implements GeneralController{
+
     @Override
     public void execute() throws IOException, ClassNotFoundException, SQLException {
         Skill skill=new Skill();
