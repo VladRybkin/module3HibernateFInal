@@ -19,13 +19,15 @@ public class Project {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "projectCompanyID")
+    @ManyToOne
+    @JoinColumn(name = "project_company_id")
     private Company projectCompanyId;
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "project_Customer_ID")
+    @ManyToOne
+    @JoinColumn(name = "project_customer_id")
     private Customer projectCustomerId;
 
     @Column(name = "project_Time_Stamp")
