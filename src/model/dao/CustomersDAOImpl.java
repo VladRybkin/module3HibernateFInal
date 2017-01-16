@@ -20,6 +20,10 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     public CustomersDAOImpl(SessionFactory sessionFactory) {
     }
 
+    public CustomersDAOImpl() {
+
+    }
+
     @Override
     public void create(Customer customer) {
         Session session = sessionFactory.openSession();
@@ -28,7 +32,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             session.save(customer);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -46,7 +50,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             customer = (Customer) session.load(Customer.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'customerget", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -65,7 +69,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             session.update(customer);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -85,7 +89,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             session.delete(customer);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -103,7 +107,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             query = session.createQuery("from Customers where Customers_name = :name");
             query.setParameter("name", name).toString();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -122,7 +126,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
             customers = session.createCriteria(Customer.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 

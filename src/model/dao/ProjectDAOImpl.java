@@ -31,7 +31,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
             session.save(project);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -51,7 +51,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
             project=(Project) session.load(Project.class, id);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -70,7 +70,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
             session.update(project);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -108,7 +108,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
             session.delete(project);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -128,7 +128,7 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
             projects = session.createCriteria(Project.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 

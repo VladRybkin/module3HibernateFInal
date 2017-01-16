@@ -1,18 +1,31 @@
 package controller;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.hibernate.cfg.Configuration;
+import utilities.HibernateUtil;
 import view.ConsoleDataInput;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
+
 
 /**
  * Created by Vlad on 29.12.2016.
  */
 public class MainClass {
+
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
         GeneralController generalController;
         int controlValue;
         ConsoleDataInput.writeMessage("hello");
+//        SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
+
+
 
 
         while (true) {

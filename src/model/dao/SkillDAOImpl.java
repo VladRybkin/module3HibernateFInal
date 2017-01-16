@@ -29,7 +29,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             session.save(skill);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create CustomerFail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -47,7 +47,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             query = session.createQuery("from Skills where skill_name = :name");
             query.setParameter("name", name).toString();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -66,7 +66,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             skill=(Skill) session.load(Skill.class, id);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -85,7 +85,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             session.update(skill);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -105,7 +105,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             session.delete(skill);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -124,7 +124,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
             skills = session.createCriteria(Skill.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 

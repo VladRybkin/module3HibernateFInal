@@ -31,7 +31,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             session.save(company);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Create company Fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -49,7 +49,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             company = (Company) session.load(Company.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -69,7 +69,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             session.update(company);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "companyupdate fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -107,7 +107,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             query = session.createQuery("from Companies where name = :name");
             query.setParameter("name", name).toString();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -126,7 +126,7 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
             companies = session.createCriteria(Company.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 

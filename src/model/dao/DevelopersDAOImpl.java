@@ -26,7 +26,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             session.save(developer);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Developer Create fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -45,7 +45,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             developer=(Developer) session.load(Developer.class, id);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -64,7 +64,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             session.update(developer);
             session.getTransaction().commit();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -84,7 +84,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             session.delete(developer);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'deleteById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -102,7 +102,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             query = session.createQuery("from Developers where Developer_name = :name");
             query.setParameter("name", name).toString();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -121,7 +121,7 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
             developers = session.createCriteria(Developer.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "get all fail", JOptionPane.OK_OPTION);
+            e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
 

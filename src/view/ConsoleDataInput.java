@@ -8,7 +8,6 @@ public class ConsoleDataInput {
 
     public static void writeMessage(String message){
         System.out.println(message);
-       
     }
 
     public static String readString() throws IOException {
