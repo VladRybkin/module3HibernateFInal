@@ -15,16 +15,13 @@ public class Developer {
 
     @Column(name = "developer_Name")
     private String developerName;
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+
+
     @ManyToOne
     @JoinColumn(name = "developer_company_id")
     private Company developerCompanyId;
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+
     @ManyToOne
     @JoinColumn(name = "developerProject_ID")
     private Project developerProjectId;

@@ -24,5 +24,10 @@
         <property name="hibernate.jdbc.batch_size">0</property>
         <property name="hibernate.order_updates">true</property>
         <property name="hibernate.order_inserts">true</property>
+        <mapping class="entities.Company" />
+        <mapping class="entities.Customer" />
+        <mapping class="entities.Project" />
+        <mapping class="entities.Skill" />
+        <mapping class="entities.Developer" />
     </session-factory>
 </hibernate-configuration>

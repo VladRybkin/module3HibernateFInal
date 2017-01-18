@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by Vlad on 04.12.2016.
  */
 @Entity
-@Table (name = "Companies")
+@Table (name = "COMPANIES")
 public class Company {
     @Id
     @GeneratedValue(generator = "increment")

@@ -16,16 +16,12 @@ public class Project {
     @Column(name = "developer_Name")
     private String projectName;
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+
     @ManyToOne
     @JoinColumn(name = "project_company_id")
     private Company projectCompanyId;
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+
     @ManyToOne
     @JoinColumn(name = "project_customer_id")
     private Customer projectCustomerId;
