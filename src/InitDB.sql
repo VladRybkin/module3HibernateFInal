@@ -30,8 +30,8 @@ customer_name character varying NOT NULL
 
 
 create table COMPANIES(
-companie_id serial PRIMARY KEY NOT NULL,
-companie_name character varying NOT NULL
+company_id serial PRIMARY KEY NOT NULL,
+company_name character varying NOT NULL
 );
 
 

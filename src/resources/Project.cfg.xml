@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Project" table="PROJECTS">
+        <id name=" projectId" type="int" column="project_id">
+            <generator class="native"/>
+        </id>
+    </class>
+</hibernate-mapping>

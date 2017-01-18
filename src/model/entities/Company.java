@@ -13,10 +13,10 @@ public class Company {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "company_ID")
+    @Column(name = "company_id")
     private int companyID;
 
-    @Column(name = "company_Name")
+    @Column(name = "company_name")
     private String companyName;
 
     public Company(String companyName) {
