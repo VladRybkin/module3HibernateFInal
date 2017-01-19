@@ -22,7 +22,7 @@ public class SkillController implements GeneralController{
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Skill.class).configure("resources.HibernateConfig.cfg.xml");
+        Configuration configuration = new Configuration().addAnnotatedClass(Skill.class).configure("resources\\HibernateConfig.cfg.xml");
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
 
             SkillDAOImpl skillDAO=new SkillDAOImpl(sessionFactory);

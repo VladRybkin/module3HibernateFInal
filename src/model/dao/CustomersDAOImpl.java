@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import utilities.ConnectionUtils;
 
 import javax.swing.*;
 import java.sql.ResultSet;

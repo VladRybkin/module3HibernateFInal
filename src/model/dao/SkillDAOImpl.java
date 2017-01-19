@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import utilities.ConnectionUtils;
+
 
 import javax.swing.*;
 import java.sql.ResultSet;
@@ -23,12 +23,12 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
 
     @Override
     public void create(Skill skill) {
-        Session session =sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.save(skill);
             session.getTransaction().commit();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
@@ -60,12 +60,12 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     @Override
     public Skill get(int id) {
         Session session = sessionFactory.openSession();
-        Skill skill= null;
+        Skill skill = null;
         try {
             session.beginTransaction();
-            skill=(Skill) session.load(Skill.class, id);
+            skill = (Skill) session.load(Skill.class, id);
             session.getTransaction().commit();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
@@ -79,12 +79,12 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
 
     @Override
     public void update(Skill skill) {
-        Session session =sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.update(skill);
             session.getTransaction().commit();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (session != null && session.isOpen()) {
@@ -101,7 +101,7 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
         Skill skill = null;
         try {
             session.beginTransaction();
-            skill= (Skill) session.load(Skill.class, id);
+            skill = (Skill) session.load(Skill.class, id);
             session.delete(skill);
             session.getTransaction().commit();
         } catch (Exception e) {
