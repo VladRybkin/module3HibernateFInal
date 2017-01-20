@@ -21,7 +21,7 @@ public class ProjectController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Project.class).configure("resources\\HibernateConfig.cfg.xml");
+        Configuration configuration = new Configuration().addAnnotatedClass(Project.class).configure("\\resources\\HibernateConfig.cfg.xml");
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
 
 

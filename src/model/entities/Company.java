@@ -8,15 +8,15 @@ import javax.persistence.*;
  * Created by Vlad on 04.12.2016.
  */
 @Entity
-@Table(name = "COMPANIES", schema = "public")
+@Table (name = "COMPANIES", schema = "public")
 public class Company {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "company_id")
+    @Column(name = "companie_id")
     private int companyID;
 
-    @Column(name = "company_name")
+    @Column(name = "companie_name")
     private String companyName;
 
     public Company(String companyName) {

@@ -12,6 +12,7 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     private static SessionFactory sessionFactory;
 
     public CustomersDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public CustomersDAOImpl() {
@@ -21,7 +22,15 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     @Override
     public void create(Customer customer) {
         try (Session session = sessionFactory.openSession()) {
-            session.save(customer);
+            try {
+                session.beginTransaction();
+                session.save(customer);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
+            }
+
         }
     }
 
@@ -33,13 +42,12 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     }
 
     @Override
-    public boolean update(Customer customer) {
+    public void update(Customer customer) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 session.update(customer);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -49,14 +57,13 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 Customer customer = session.load(Customer.class, id);
                 session.delete(customer);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -66,7 +73,6 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
 
     @Override
     public Customer findByName(String name) {
-
         try (Session session = sessionFactory.openSession()) {
             return session.get(Customer.class, name);
         }

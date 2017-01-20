@@ -21,7 +21,7 @@ public class DeveloperController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Developer.class).configure("resources\\HibernateConfig.cfg.xml");
+        Configuration configuration = new Configuration().addAnnotatedClass(Developer.class).configure("\\resources\\HibernateConfig.cfg.xml");
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
 
             DevelopersDAOImpl developersDAO = new DevelopersDAOImpl(sessionFactory);

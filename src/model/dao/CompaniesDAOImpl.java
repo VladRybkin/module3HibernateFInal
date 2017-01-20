@@ -21,12 +21,21 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     private static SessionFactory sessionFactory;
 
     public CompaniesDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void create(Company company) {
         try (Session session = sessionFactory.openSession()) {
-            session.save(company);
+            try {
+                session.beginTransaction();
+                session.save(company);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
+            }
+
         }
     }
 
@@ -38,13 +47,12 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     }
 
     @Override
-    public boolean update(Company company) {
+    public void update(Company company) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 session.update(company);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -54,14 +62,13 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 Company company = session.load(Company.class, id);
                 session.delete(company);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;

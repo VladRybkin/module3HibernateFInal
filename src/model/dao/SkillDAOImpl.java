@@ -13,12 +13,15 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     private static SessionFactory sessionFactory;
 
     public SkillDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void create(Skill skill) {
         try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
             session.save(skill);
+            session.getTransaction().commit();
         }
     }
 
@@ -30,13 +33,12 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     }
 
     @Override
-    public boolean update(Skill skill) {
+    public void update(Skill skill) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 session.update(skill);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -46,14 +48,13 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 Skill skill = session.load(Skill.class, id);
                 session.delete(skill);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -61,9 +62,10 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
         }
     }
 
-    public Skill findByName(String name) {
+    public String findByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(Skill.class, name);
+//            return session.get(Skill.class, name);
+            return session.createQuery("select skillName from Skill where skillName = :name").setParameter("name", name).toString();
         }
     }
 

@@ -16,12 +16,21 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     private static SessionFactory sessionFactory;
 
     public ProjectDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void create(Project project) {
         try (Session session = sessionFactory.openSession()) {
-            session.save(project);
+            try {
+                session.beginTransaction();
+                session.save(project);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
+            }
+
         }
     }
 
@@ -33,13 +42,12 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     }
 
     @Override
-    public boolean update(Project project) {
+    public void update(Project project) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 session.update(project);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -49,14 +57,13 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 Project project = session.load(Project.class, id);
                 session.delete(project);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;

@@ -12,12 +12,21 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     private static SessionFactory sessionFactory;
 
     public DevelopersDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void create(Developer developer) {
         try (Session session = sessionFactory.openSession()) {
-            session.save(developer);
+            try {
+                session.beginTransaction();
+                session.save(developer);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
+            }
+
         }
 
     }
@@ -31,13 +40,12 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     }
 
     @Override
-    public boolean update(Developer developer) {
+    public void update(Developer developer) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 session.update(developer);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
@@ -48,14 +56,13 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
                 Developer developer = session.load(Developer.class, id);
                 session.delete(developer);
                 session.getTransaction().commit();
-                return true;
             } catch (Exception e) {
                 session.getTransaction().rollback();
                 throw e;
