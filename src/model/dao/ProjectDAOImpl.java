@@ -65,9 +65,9 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
     }
 
     @Override
-    public String findByName(String name) {
+    public Project findByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Project where projectName = :name").setParameter("name", name).toString();
+            return session.get(Project.class, name);
         }
     }
 

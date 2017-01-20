@@ -61,13 +61,12 @@ public class SkillDAOImpl implements SkillDAO<Skill> {
         }
     }
 
-    @Override
-    public String findByName(String name) {
-
+    public Skill findByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select skillName from Skill where skillName = :name").setParameter("name", name).toString();
+            return session.get(Skill.class, name);
         }
     }
+
 
     @Override
     public List<Skill> getAll() {

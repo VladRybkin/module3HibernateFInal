@@ -65,9 +65,9 @@ public class DevelopersDAOImpl implements DevelopersDAO<Developer> {
     }
 
     @Override
-    public String findByName(String name) {
+    public Developer findByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Developer where developerName = :name").setParameter("name", name).toString();
+            return session.get(Developer.class, name);
         }
     }
 

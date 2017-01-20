@@ -65,10 +65,10 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
     }
 
     @Override
-    public String findByName(String name) {
+    public Customer findByName(String name) {
 
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Customer where customerName = :name").setParameter("name", name).toString();
+            return session.get(Customer.class, name);
         }
     }
 

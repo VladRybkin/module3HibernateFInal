@@ -70,10 +70,10 @@ public class CompaniesDAOImpl implements CompaniesDAO<Company> {
     }
 
     @Override
-    public String findByName(String name) {
+    public Company findByName(String name) {
 
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Company where companyName = :name").setParameter("name", name).toString();
+            return session.get(Company.class, name);
         }
     }
 

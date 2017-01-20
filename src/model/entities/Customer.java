@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "customers", schema = "public")
 public class Customer {
     @Id
     @GeneratedValue(generator = "increment")

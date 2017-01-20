@@ -3,9 +3,8 @@ package model.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
 @Entity
-@Table(name = "Skills")
+@Table(name = "skills", schema = "public")
 public class Skill {
     @Id
     @GeneratedValue(generator = "increment")
