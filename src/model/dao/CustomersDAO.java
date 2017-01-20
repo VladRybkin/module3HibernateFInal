@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface CustomersDAO<Customer> extends DAO<Customer> {
 
-   public Customer findByName(String name);
+   public String findByName(String name);
    public List<Customer> getAll();
 
 }

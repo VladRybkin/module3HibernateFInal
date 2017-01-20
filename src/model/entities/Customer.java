@@ -6,15 +6,15 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Customers")
+@Table(name = "CUSTOMERS")
 public class Customer {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "customer_ID")
+    @Column(name = "customer_id")
     private int customerId;
 
-    @Column (name = "customer_Name")
+    @Column (name = "customer_name")
     private String customerName;
 
     public Customer(String customerName) {

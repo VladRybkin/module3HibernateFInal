@@ -3,14 +3,9 @@ package model.dao;
 import model.entities.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 
-import javax.swing.*;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,117 +20,61 @@ public class ProjectDAOImpl implements ProjectDAO<Project> {
 
     @Override
     public void create(Project project) {
-        Session session =sessionFactory.openSession();
-        try {
-            session.beginTransaction();
+        try (Session session = sessionFactory.openSession()) {
             session.save(project);
-            session.getTransaction().commit();
-        }catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
         }
-
-
     }
 
     @Override
     public Project get(int id) {
-        Session session = sessionFactory.openSession();
-        Project project= null;
-        try {
-            session.beginTransaction();
-            project=(Project) session.load(Project.class, id);
-            session.getTransaction().commit();
-        }catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-        }
-
-        return project;
-    }
-
-    @Override
-    public void update(Project project) {
-        Session session =sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.update(project);
-            session.getTransaction().commit();
-        }catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-        }
-
-    }
-
-    @Override
-    public Project findByName(String name) {
-        Session session = sessionFactory.openSession();
-        Query query = null;
-        try {
-            query = session.createQuery("from Project where Project_name = :name");
-            query.setParameter("name", name).toString();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
-            return (Project) query.uniqueResult();
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Project.class, id);
         }
     }
 
     @Override
-    public void delete(int id) {
-        Session session = sessionFactory.openSession();
-        Project project = null;
-        try {
-            session.beginTransaction();
-            project = (Project) session.load(Project.class, id);
-            session.delete(project);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
+    public boolean update(Project project) {
+        try (Session session = sessionFactory.openSession()) {
+            try {
+                session.beginTransaction();
+                session.update(project);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
+            }
 
-                session.close();
+        }
+    }
+
+    @Override
+    public boolean delete(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            try {
+                session.beginTransaction();
+                Project project = session.load(Project.class, id);
+                session.delete(project);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
             }
         }
+    }
 
-
+    @Override
+    public String findByName(String name) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Project where projectName = :name").setParameter("name", name).toString();
+        }
     }
 
     @Override
     public List<Project> getAll() {
-        Session session = sessionFactory.openSession();
-        List<Project> projects = new ArrayList<Project>();
-        try {
-            session.beginTransaction();
-            projects = session.createCriteria(Project.class).list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
+        try (Session session = sessionFactory.openSession()) {
+            return session.createCriteria(Project.class).list();
         }
-
-        return projects;
     }
 }

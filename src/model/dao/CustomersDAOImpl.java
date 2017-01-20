@@ -1,15 +1,10 @@
 package model.dao;
 
 import model.entities.Customer;
-import model.entities.Developer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import javax.swing.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,116 +20,63 @@ public class CustomersDAOImpl implements CustomersDAO<Customer> {
 
     @Override
     public void create(Customer customer) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
+        try (Session session = sessionFactory.openSession()) {
             session.save(customer);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
         }
     }
 
     @Override
     public Customer get(int id) {
-        Session session = sessionFactory.openSession();
-        Customer customer = null;
-        try {
-            session.beginTransaction();
-            customer = (Customer) session.load(Customer.class, id);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Customer.class, id);
         }
-
-        return customer;
     }
 
     @Override
-    public void update(Customer customer) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.update(customer);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
+    public boolean update(Customer customer) {
+        try (Session session = sessionFactory.openSession()) {
+            try {
+                session.beginTransaction();
+                session.update(customer);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
             }
-        }
 
+        }
     }
 
     @Override
-    public void delete(int id) {
-        Session session = sessionFactory.openSession();;
-        Customer customer = null;
-        try {
-            session.beginTransaction();
-            customer = (Customer) session.load(Customer.class, id);
-            session.delete(customer);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
+    public boolean delete(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            try {
+                session.beginTransaction();
+                Customer customer = session.load(Customer.class, id);
+                session.delete(customer);
+                session.getTransaction().commit();
+                return true;
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw e;
             }
         }
-
     }
 
     @Override
-    public Customer findByName(String name) {
-        Session session = sessionFactory.openSession();
-        Query query = null;
-        try {
-            query = session.createQuery("from Customers where Customers_name = :name");
-            query.setParameter("name", name).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
+    public String findByName(String name) {
 
-                session.close();
-            }
-            return (Customer) query.uniqueResult();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Customer where customerName = :name").setParameter("name", name).toString();
         }
     }
 
     @Override
     public List<Customer> getAll() {
-        Session session = sessionFactory.openSession();
-        List<Customer> customers = new ArrayList<Customer>();
-        try {
-            session.beginTransaction();
-            customers = session.createCriteria(Customer.class).list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-
-                session.close();
-            }
+        try (Session session = sessionFactory.openSession()) {
+            return session.createCriteria(Customer.class).list();
         }
-
-        return customers;
     }
-
 
 }
