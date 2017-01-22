@@ -28,33 +28,40 @@ public class CustomerController implements GeneralController {
             ConsoleDataInput.writeMessage("\"* * * CUSTOMER * * *\" + \"\\n\" +\n" +
                     "\"1 - CREATE | 2 - DELETE | 3 - UPDATE | 4 - SHOW ALL Customers | 5 - FIND BY NAME | 6 - GET BY ID\\\\n\"");
             controlValue=ConsoleDataInput.readInt();
-            if ( controlValue==1){
-                ConsoleDataInput.writeMessage("imput customer name");
-                name=ConsoleDataInput.readString();
-                customer.setCustomerName(name);
-                customersDAO.create(customer);
-            }else if (controlValue==2){
-                ConsoleDataInput.writeMessage("imput cutomer id for delete");
-                id=ConsoleDataInput.readInt();
-                customersDAO.delete(id);
-            }else if (controlValue==3){
-                ConsoleDataInput.writeMessage("impput update cutomer");
-                id=ConsoleDataInput.readInt();
-                customer.setCustomerId(id);
-                customersDAO.update(customer);
-            } else if (controlValue==4){
-                System.out.println(customersDAO.getAll());
-            }else if (controlValue==5){
-                ConsoleDataInput.writeMessage("imput customer name t find");
-                name=ConsoleDataInput.readString();
-                System.out.println(customersDAO.findByName(name));
-            }else if (controlValue==6){
-                ConsoleDataInput.writeMessage("imput get id");
-                id=ConsoleDataInput.readInt();
-                System.out.println(customersDAO.get(id));
-            } else
-                System.out.println("You have entered not correct value. Input 1, 2, 3, 4, 5 or 6.");
-
+            switch (controlValue) {
+                case 1:{
+                    ConsoleDataInput.writeMessage("imput customer name");
+                    name = ConsoleDataInput.readString();
+                    customer.setCustomerName(name);
+                    customersDAO.create(customer);
+                    break;
+                }case 2:{
+                    ConsoleDataInput.writeMessage("imput cutomer id for delete");
+                    id = ConsoleDataInput.readInt();
+                    customersDAO.delete(id);
+                    break;
+                }case 3:{
+                    ConsoleDataInput.writeMessage("impput update cutomer");
+                    id = ConsoleDataInput.readInt();
+                    customer.setCustomerId(id);
+                    customersDAO.update(customer);
+                    break;
+                }case 4:{
+                    System.out.println(customersDAO.getAll());
+                    break;
+                }case 5:{
+                    ConsoleDataInput.writeMessage("imput customer name t find");
+                    name = ConsoleDataInput.readString();
+                    System.out.println(customersDAO.findByName(name));
+                    break;
+                }case 6:{
+                    ConsoleDataInput.writeMessage("imput get id");
+                    id = ConsoleDataInput.readInt();
+                    System.out.println(customersDAO.get(id));
+                    break;
+                }
+                default:break;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
