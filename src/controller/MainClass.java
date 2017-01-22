@@ -3,6 +3,7 @@ package controller;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import view.ConsoleDataInput;
+import view.HibernateUltill;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,20 +30,27 @@ public class MainClass {
                 case 1:
                     generalController = new SkillController();
                     generalController.execute();
+                    break;
                 case 2:
                     generalController = new CustomerController();
                     generalController.execute();
+                    break;
                 case 3:
                     generalController = new CompanyController();
                     generalController.execute();
+                    break;
                 case 4:
                     generalController = new DeveloperController();
                     generalController.execute();
+                    break;
                 case 5:
                     generalController = new ProjectController();
                     generalController.execute();
+                    break;
                 case 6:
                     System.out.println("EXIT FROM SYSTEM");
+                    default: break;
+
             }
 
         }
