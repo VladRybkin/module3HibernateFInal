@@ -6,6 +6,7 @@ import model.entities.Company;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import view.ConsoleDataInput;
+import view.HibernateUltill;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,10 +23,8 @@ public class CompanyController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().configure("\\resources\\HibernateConfig.cfg.xml").addAnnotatedClass(Company.class);
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
-
-            CompaniesDAOImpl companyDAO = new CompaniesDAOImpl(sessionFactory);
+        try  {
+            CompaniesDAOImpl companyDAO = new CompaniesDAOImpl(HibernateUltill.getSessionFactory());
             ConsoleDataInput.writeMessage("\"* * * COMPANY * * *\" + \"\\n\" +\n" +
                     "\"1 - CREATE | 2 - DELETE | 3 - UPDATE | 4 - SHOW ALL COMPANIES | 5 - FIND BY NAME | 6 - GET BY ID\\\\n\"");
             controlValue=ConsoleDataInput.readInt();
@@ -56,6 +55,8 @@ public class CompanyController implements GeneralController {
             } else
                 System.out.println("You have entered not correct value. Input 1, 2, 3, 4, 5 or 6.");
 
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

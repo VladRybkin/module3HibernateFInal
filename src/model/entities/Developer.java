@@ -23,7 +23,7 @@ public class Developer {
 
 
     @ManyToOne
-    @JoinColumn(name = "developerProject_ID")
+    @JoinColumn(name = "developer_Project_ID")
     private Project developerProjectId;
 
     @Column(name = "developer_Join_Date")

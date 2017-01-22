@@ -7,6 +7,7 @@ import model.entities.Developer;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import view.ConsoleDataInput;
+import view.HibernateUltill;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,10 +22,9 @@ public class DeveloperController implements GeneralController {
         int id;
         String name;
         int controlValue;
-        Configuration configuration = new Configuration().addAnnotatedClass(Developer.class).configure("\\resources\\HibernateConfig.cfg.xml");
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
 
-            DevelopersDAOImpl developersDAO = new DevelopersDAOImpl(sessionFactory);
+        try  {
+            DevelopersDAOImpl developersDAO = new DevelopersDAOImpl(HibernateUltill.getSessionFactory());
             ConsoleDataInput.writeMessage("\"* * * DEVELOPER * * *\" + \"\\n\" +\n" +
                     "\"1 - CREATE | 2 - DELETE | 3 - UPDATE | 4 - SHOW ALL COMPANIES | 5 - FIND BY NAME | 6 - GET BY ID\\\\n\"");
             controlValue=ConsoleDataInput.readInt();
@@ -55,6 +55,8 @@ public class DeveloperController implements GeneralController {
             } else
                 System.out.println("You have entered not correct value. Input 1, 2, 3, 4, 5 or 6.");
 
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
